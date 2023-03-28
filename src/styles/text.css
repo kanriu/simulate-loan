@@ -1,0 +1,63 @@
+.text_regular {
+  font-weight: 400;
+}
+
+.text_medium {
+  font-weight: 500;
+}
+
+.text_semi_bold {
+  font-weight: 600;
+}
+
+.text_bold {
+  font-weight: 700;
+}
+
+.size_1 {
+  font-size: 2.25rem;
+}
+
+.size_2 {
+  font-size: 1.875rem;
+}
+
+.size_3 {
+  font-size: 1.25rem;
+}
+
+.size_4 {
+  font-size: 1rem;
+}
+
+.size_5 {
+  font-size: 0.625rem;
+}
+
+.mb_16 {
+  margin-bottom: 16px;
+}
+
+.m_5 {
+  margin: 5px;
+}
+
+.font_outfit {
+  font-family: "Outfit";
+}
+
+.color_gray {
+  color: gray;
+}
+
+.color_primary {
+  color: #773ed7;
+}
+
+.color_error {
+  color: #da3030;
+}
+
+.opacity {
+  opacity: 0;
+}

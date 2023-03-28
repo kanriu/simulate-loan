@@ -1,0 +1,8 @@
+.slider {
+  margin: 20px 0;
+}
+
+.div_container {
+  display: flex;
+  justify-content: space-between;
+}

@@ -1,0 +1,32 @@
+.text_input_container {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom: 2px solid gray;
+  font-size: 1.25rem;
+  padding: 5px 0;
+}
+
+.input_error {
+  margin-top: 20px;
+  margin-bottom: 10px;
+  border: none;
+  border-bottom: 2px solid #da3030;
+  font-size: 1.25rem;
+  padding: 5px 0;
+}
+
+.input:focus {
+  outline: none;
+  border-color: black;
+}
+
+.input_error:focus {
+  outline: none;
+  border-color: #da3030;
+}
