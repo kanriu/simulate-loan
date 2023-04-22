@@ -2,32 +2,28 @@ import { Response } from "../interfaces/services";
 import moment from "moment";
 import "moment/locale/es";
 
-const tea = 26.5612;
-
-export const getInformation: () => Response = () => {
+export const getInformation: () => Promise<Response> = async () => {
+  const response = await fetch("information.json");
+  const data = await response.json();
   return {
-    campaign_name: "Instacash",
-    min_quota: 1,
-    max_quota: 48,
-    max_amount: 19600,
-    min_amount: 1500,
-    tea: Number(tea.toFixed(2)),
+    ...data,
+    tea: Number(data.tea.toFixed(2)),
     payment_date: String(
-      moment(new Date("2019-12-26T16:30:04.591Z")).locale("es").format("DD MMM")
+      moment(new Date(data.payment_date)).locale("es").format("DD MMM")
     ),
-    currency: "PEN",
-    monthly_amount: Number((382.5912).toFixed(2)),
+    monthly_amount: Number(data.monthly_amount.toFixed(2)),
   };
 };
 
 export const getAmountSimulation = (
   amount: number,
   quota: number,
-  maxQuota: number
+  maxQuota: number,
+  tea: number
 ) => {
   const teaActual = (tea * quota) / maxQuota;
   return {
-    tea: teaActual,
+    teaActual,
     monthly_amount: ((amount * teaActual) / 100 + amount) / quota,
   };
 };

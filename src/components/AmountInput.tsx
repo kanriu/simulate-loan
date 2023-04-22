@@ -1,39 +1,39 @@
-import { useEffect, useState, memo } from "react";
+import { useEffect, useState } from "react";
 import { Text } from "./Text";
 import "../styles/textInput.css";
 import { Data } from "../interfaces/services";
 import { useDebouncedValue } from "../hooks/useDebouncedValue";
 
 interface Props {
-  min: string;
-  max: string;
-  initial: string;
-  isError: boolean;
+  textLabel: string;
+  amountMin: string;
+  amountMax: string;
+  amountInitial: string;
+  hasError: boolean;
   setIsError: React.Dispatch<React.SetStateAction<boolean>>;
   onChange: <K extends keyof Data>(value: Data[K], field: K) => void;
 }
 
-export const TextInput = ({
-  min,
-  max,
-  initial,
-  isError,
+export const AmountInput = ({
+  textLabel,
+  amountMin,
+  amountMax,
+  amountInitial,
+  hasError,
   setIsError,
   onChange,
 }: Props) => {
-  console.log("TEXT INPUT");
-
-  const [value, setValue] = useState(`S/ ${initial}.00`);
-  const debounceValue = useDebouncedValue(value);
+  const [value, setValue] = useState(`S/ ${amountInitial}.00`);
+  const debounceValue = useDebouncedValue(value, 1000);
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const text = e.target.value;
-    const dot = text.split(".");
+    const arrNum = text.split(".");
     if (!Number(text.replace("S/ ", ""))) {
       setValue("S/ 1.00");
       verifyMinMax("S/ 1.00");
     } else {
-      if (dot[1] === undefined) return;
-      if (text.includes("S/ ") && dot.length <= 2 && dot[1].length <= 2) {
+      if (arrNum[1] === undefined) return;
+      if (text.includes("S/ ") && arrNum.length <= 2 && arrNum[1].length <= 2) {
         setValue(text);
         verifyMinMax(text);
       }
@@ -56,8 +56,8 @@ export const TextInput = ({
   const verifyMinMax = (value: string) => {
     const newValue = Number(value.replace("S/ ", ""));
     if (
-      newValue < Number(min.replace(",", "")) ||
-      newValue > Number(max.replace(",", ""))
+      newValue < Number(amountMin.replace(",", "")) ||
+      newValue > Number(amountMax.replace(",", ""))
     )
       setIsError(true);
     else {
@@ -67,9 +67,9 @@ export const TextInput = ({
 
   return (
     <article className="text_input_container">
-      <Text className="text_bold size_3">Ingrese un monto</Text>
+      <Text className="text_bold size_3">{textLabel}</Text>
       <input
-        className={`${isError ? "input_error" : "input"}`}
+        className={`${hasError ? "input_error" : "input"}`}
         type={"text"}
         value={value}
         onChange={handleChange}
@@ -79,16 +79,11 @@ export const TextInput = ({
       />
       <Text
         className={`text_regular size_4 mb_16 ${
-          isError ? "color_error" : "color_gray"
+          hasError ? "color_error" : "color_gray"
         }`}
       >
-        {`Mínimo S/ ${min} - Máximo S/ ${max}`}
+        {`Mínimo S/ ${amountMin} - Máximo S/ ${amountMax}`}
       </Text>
     </article>
   );
 };
-//   },
-//   (prevProps, nextProps) => {
-//     return prevProps.isError === nextProps.isError;
-//   }
-// );

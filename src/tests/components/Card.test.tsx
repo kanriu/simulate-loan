@@ -4,7 +4,8 @@ import { Card } from "../../components";
 describe("Test in Card Component ", () => {
   test("should render montlyAmount", () => {
     const mock = {
-      montlyAmount: 0,
+      title: "Tu cuota mensual será:",
+      monthlyAmount: "S/ 0",
       isError: false,
     };
     render(
@@ -12,11 +13,12 @@ describe("Test in Card Component ", () => {
         <div></div>
       </Card>
     );
-    expect(screen.getByText(`S/ ${mock.montlyAmount}`)).toBeTruthy();
+    expect(screen.getByText(mock.monthlyAmount)).toBeTruthy();
   });
   test("should render opacity on", () => {
     const mock = {
-      montlyAmount: 0,
+      title: "Tu cuota mensual será:",
+      monthlyAmount: "S/ 0",
       isError: true,
     };
     render(
@@ -24,7 +26,7 @@ describe("Test in Card Component ", () => {
         <div></div>
       </Card>
     );
-    expect(screen.getByText(`S/ ${mock.montlyAmount}`).className).toBe(
+    expect(screen.getByText(mock.monthlyAmount).className).toBe(
       "text_bold size_1 mb_16 opacity"
     );
   });

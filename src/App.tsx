@@ -3,29 +3,19 @@ import {
   Card,
   CardSmall,
   Loader,
-  SectionSlider,
+  QuotaSectionSlider,
   Text,
-  TextInput,
+  AmountInput,
 } from "./components";
 import "./styles/text.css";
 import { useService } from "./hooks";
 import { addComma } from "./utils/addComma";
-import { useMemo, useState } from "react";
+import { useState } from "react";
 
 const App = () => {
   const [isError, setIsError] = useState(false);
   const { data, loadingPrimary, loadingSecondary, response, onChange } =
     useService(isError);
-
-  const params = useMemo(
-    () => ({
-      onChange,
-      title: "Elige el número de cuotas",
-      min: response?.min_quota,
-      max: response?.max_quota,
-    }),
-    [onChange, response?.min_quota, response?.max_quota]
-  );
 
   return (
     <>
@@ -41,31 +31,41 @@ const App = () => {
           data &&
           response && (
             <>
-              <Card montlyAmount={response.monthly_amount} isError={isError}>
+              <Card
+                title="Tu cuota mensual será:"
+                monthlyAmount={`S/ ${response.monthly_amount}`}
+                isError={isError}
+              >
                 <CardSmall
-                  primary="Cuotas"
-                  secondary={`${data.quota}`}
-                  separator
+                  title="Cuotas"
+                  subtitle={`${data.quota}`}
+                  verticalSeparator
                 />
                 <CardSmall
-                  primary="TEA"
-                  secondary={`${response.tea.toFixed(2)}%`}
-                  separator
+                  title="TEA"
+                  subtitle={`${response.tea.toFixed(2)}%`}
+                  verticalSeparator
                 />
                 <CardSmall
-                  primary="Pago 1ª cuota"
-                  secondary={`${response.payment_date}`}
+                  title="Pago 1ª cuota"
+                  subtitle={`${response.payment_date}`}
                 />
               </Card>
-              <TextInput
-                initial={String(data.amount)}
+              <AmountInput
+                textLabel={"Ingrese un monto"}
+                amountInitial={String(data.amount)}
                 onChange={onChange}
-                min={addComma(String(response.min_amount))}
-                max={addComma(String(response.max_amount))}
-                isError={isError}
+                amountMin={addComma(String(response.min_amount))}
+                amountMax={addComma(String(response.max_amount))}
+                hasError={isError}
                 setIsError={setIsError}
               />
-              <SectionSlider {...params} />
+              <QuotaSectionSlider
+                onChange={onChange}
+                title="Elige el número de cuotas"
+                quotaMin={response?.min_quota}
+                quotaMax={response?.max_quota}
+              />
             </>
           )
         )}

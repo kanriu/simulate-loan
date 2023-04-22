@@ -2,18 +2,19 @@ import "../styles/card.css";
 import { Text } from "./Text";
 
 interface Props {
-  montlyAmount: number;
+  title: string;
+  monthlyAmount: string;
   children: any;
   isError: boolean;
 }
 
-export const Card = ({ montlyAmount, children, isError }: Props) => {
+export const Card = ({ title, monthlyAmount, children, isError }: Props) => {
   return (
     <section className="card_container">
-      <Text className="text_regular size_3">Tu cuota mensual será:</Text>
-      <Text
-        className={`text_bold size_1 mb_16${isError ? " opacity" : ""}`}
-      >{`S/ ${montlyAmount}`}</Text>
+      <Text className="text_regular size_3">{title}</Text>
+      <Text className={`text_bold size_1 mb_16${isError ? " opacity" : ""}`}>
+        {monthlyAmount}
+      </Text>
       <section className="card_section">{children}</section>
     </section>
   );
