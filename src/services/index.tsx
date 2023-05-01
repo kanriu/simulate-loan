@@ -3,7 +3,7 @@ import moment from 'moment'
 import 'moment/locale/es'
 
 export const getInformation: () => Promise<Response> = async () => {
-  const response = await fetch('informations.json')
+  const response = await fetch('information.json')
   const data = await response.json()
   return {
     ...data,
